@@ -168,7 +168,7 @@ inline void addMatchingCellsToCollection(const BoardCell& currentCell, const Boa
 	JewelKind kindToMatch = board.getJewel(currentCell.x, currentCell.y);
 	if (kindToMatch != Empty)
 	{
-		for (auto adjacentCell : cellsToTest)
+		for (const auto& adjacentCell : cellsToTest)
 		{
 			if (out_visitedCells.count(adjacentCell) == 0)
 			{
@@ -189,9 +189,9 @@ inline void repopulateBoardAfterMatches(MatchedCellsCollection matchedGroups, Bo
 	// Optional check: once jewels have been matched, the board may repopulate and cascade for more points
 	// Remap collection into BoardCellCollection, sorted by row and column in ascending order
 	BoardCellCollection matchedCells;
-	for (auto collection : matchedGroups)
+	for (const auto& collection : matchedGroups)
 	{
-		for (auto cell : collection)
+		for (const auto& cell : collection)
 		{
 			matchedCells.insert(cell);
 		}
@@ -199,9 +199,9 @@ inline void repopulateBoardAfterMatches(MatchedCellsCollection matchedGroups, Bo
 
 	// Traverse the board where matches were made, moving jewels down into empty spaces
 	// Begin from the top of the board to avoid shifting matched cells still to be resolved
-	for (auto it = matchedCells.rbegin(); it != matchedCells.rend(); ++it)
+	for (auto it = matchedCells.crbegin(); it != matchedCells.crend(); ++it)
 	{
-		auto cell = *it;
+		const auto& cell = *it;
 		for (int y = cell.y; y < out_board.getHeight() - 1; y++)
 		{
 			out_board.setJewel(cell.x, y, out_board.getJewel(cell.x, y + 1));
@@ -212,9 +212,9 @@ inline void repopulateBoardAfterMatches(MatchedCellsCollection matchedGroups, Bo
 
 inline void resolveMatchesForBoard(const MatchedCellsCollection& potentialMatches, Board& out_board)
 {
-	for (auto matchedCells : potentialMatches)
+	for (const auto& matchedCells : potentialMatches)
 	{
-		for (auto cell : matchedCells)
+		for (const auto& cell : matchedCells)
 		{
 			out_board.setJewel(cell.x, cell.y, Empty);
 		}
@@ -234,7 +234,7 @@ inline MatchedCellsCollection resolveCascadingMatches(Board& out_board)
 		}
 	}
 	MatchedCellsCollection cascadeMatches;
-	for (auto cell : cellsToCheck)
+	for (const auto& cell : cellsToCheck)
 	{
 		BoardCellCollection matchedCells;
 		addMatchingCellsToCollection(cell, out_board, matchedCells, BoardCellCollection());
@@ -262,7 +262,7 @@ inline MatchedCellsCollection findMatchesAfterMoveForBoard(const Move& move, con
 
 	MatchedCellsCollection potentialMatches = { matchedCellsSrc, matchedCellsDst };
 	MatchedCellsCollection results;
-	for (auto matchedCells : potentialMatches)
+	for (const auto& matchedCells : potentialMatches)
 	{
 		if (matchedCells.size() >= NumberOfColorsToMatch)
 		{
@@ -289,9 +289,9 @@ inline int calculateScoreAfterMoveForBoard(const Move& move, const Board& board)
 		{
 			BoardCellCollection uniqueCells;
 			// Extract into BoardCellCollection to only count each matching cell once
-			for (auto match : cursor)
+			for (const auto& match : cursor)
 			{
-				for (auto cell : match)
+				for (const auto& cell : match)
 				{
 					uniqueCells.insert(cell);
 				}

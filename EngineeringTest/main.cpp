@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	{
 		auto bestMoves = potentialMoves.rbegin();
 		printf("Best moves with a score of %d:\n", bestMoves->first);
-		for (auto move : bestMoves->second)
+		for (const auto& move : bestMoves->second)
 		{
 			printf("    Switching [x:%d y:%d] with %s\n", move.x, move.y, moveDirectionToString(move.direction).c_str());
 		}
