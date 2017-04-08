@@ -144,6 +144,7 @@
     <ClCompile Include="WindowsConsoleRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BallGameExercise.h" />
     <ClInclude Include="MatchingGameDecl.h" />
     <ClInclude Include="MatchingGameExercise.h" />
     <ClInclude Include="WindowsConsoleRenderer.h" />

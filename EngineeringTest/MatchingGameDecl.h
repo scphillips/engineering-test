@@ -184,7 +184,7 @@ inline void addMatchingCellsToCollection(const BoardCell& currentCell, const Boa
 	}
 }
 
-inline void repopulateBoardAfterMatches(MatchedCellsCollection matchedGroups, Board& out_board)
+inline void repopulateBoardAfterMatches(const MatchedCellsCollection& matchedGroups, Board& out_board)
 {
 	// Optional check: once jewels have been matched, the board may repopulate and cascade for more points
 	// Remap collection into BoardCellCollection, sorted by row and column in ascending order

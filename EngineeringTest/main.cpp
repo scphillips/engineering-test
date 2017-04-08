@@ -1,4 +1,6 @@
 #include "WindowsConsoleRenderer.h"
+
+#include "BallGameExercise.h"
 #include "MatchingGameExercise.h"
 
 #include <cstdlib>
@@ -7,6 +9,8 @@ int main(int argc, char** argv)
 {
 	srand(1);
 
+	// ==========
+	// Exercise 1
 	WindowsConsoleRenderer renderer;
 
 	MatchingGameExercise matchingGame;
@@ -50,5 +54,22 @@ int main(int argc, char** argv)
 	{
 		printf("No valid moves could be found\n\n");
 		renderer.printBoardWithHighlightedMovesAndMatches(gameBoard, {}, {});
+	}
+
+	// ==========
+	// Exercise 2
+	float targetHeight = 75.0f;
+	Vec2 startPoint = { 20.0f, 30.0f };
+	Vec2 startVelocity = { 50.0f, 30.0f };
+	float gravity = -9.807f;
+	float boundsWidth = 100.0f;
+	float finalXCoordinate;
+	if (tryCalculateXPositionAtHeight(targetHeight, startPoint, startVelocity, gravity, boundsWidth, finalXCoordinate))
+	{
+		printf("\nFinal coordinate: [x:%f y:%f]", finalXCoordinate, targetHeight);
+	}
+	else
+	{
+		printf("\nUnable to resolve formula");
 	}
 }
