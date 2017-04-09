@@ -31,4 +31,4 @@ A focused example function to calculate the position of a ball when it reaches a
 * The final horizontal position is found by reflecting its position within its bounding area of zero to `w`.
 
 ### Exercise 3: Racing Game
-This exercise takes an existing function in need of optimization and structural improvements. A new version, `updateRacersV2`, is provided to perform the same functionality in a more ideal way. Some basic rationale is provided in code comments, and a more comprehensive accompanying document lists how the function could be further improved upon.
+This exercise takes an existing function in need of optimization and structural improvements. A new version, `updateRacersV2`, is provided to perform the same functionality in a more ideal way. Some basic rationale is provided in code comments, and a more comprehensive accompanying document [Code Discussion.md](https://github.com/scphillips/engineering-test/blob/master/Code%20Discussion.md) lists how the function could be further improved upon.
