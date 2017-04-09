@@ -11,7 +11,7 @@ struct Vec2
 	float y;
 };
 
-}
+} // namespace
 
 inline bool tryCalculateXPositionAtHeight(float h, Vec2 p, Vec2 v, float G, float w, float& xPosition)
 {

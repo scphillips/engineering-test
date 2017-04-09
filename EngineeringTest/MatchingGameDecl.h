@@ -45,6 +45,7 @@ struct BoardCell
 	int y;
 };
 
+// Comparison function for storing BoardCells in std::set
 inline bool operator < (const BoardCell& lhs, const BoardCell& rhs)
 {
 	return (lhs.x < rhs.x || (lhs.x == rhs.x && lhs.y < rhs.y));
@@ -54,6 +55,7 @@ using BoardCellCollection = std::set<BoardCell>;
 using MatchedCellsCollection = std::vector<BoardCellCollection>;
 using RankedMoves = std::map<int, std::vector<Move>>;
 
+// Implementation added to allow functional demonstration
 class Board
 {
 public:

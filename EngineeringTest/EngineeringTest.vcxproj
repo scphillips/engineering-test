@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BallGameExercise.h" />
+    <ClInclude Include="RacingGameExercise.h" />
     <ClInclude Include="MatchingGameDecl.h" />
     <ClInclude Include="MatchingGameExercise.h" />
     <ClInclude Include="WindowsConsoleRenderer.h" />
