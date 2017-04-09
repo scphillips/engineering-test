@@ -2,16 +2,26 @@
 
 #include <math.h>
 
-namespace
-{
-
 struct Vec2
 {
 	float x;
 	float y;
 };
 
-} // namespace
+inline float reflectValueBetweenBounds(float value, float min, float max)
+{
+	// Normalize to range starting from minimum wall
+	value -= min;
+	value = fmodf(value, max * 2); // Wrap to range between [-2w..2w]
+	value = fabs(value); // Reflect off left wall
+	if (value > max)
+	{
+		value = max - (value - max); // Reflect off right wall
+	}
+	// Restore to actual range
+	value += min;
+	return value;
+}
 
 inline bool tryCalculateXPositionAtHeight(float h, Vec2 p, Vec2 v, float G, float w, float& xPosition)
 {
@@ -28,12 +38,7 @@ inline bool tryCalculateXPositionAtHeight(float h, Vec2 p, Vec2 v, float G, floa
 		float unboundedX = v.x * t + p.x;
 
 		// Account for lossless bounces between [0..w]
-		xPosition = fmodf(unboundedX, w * 2); // Wrap to range between [-2w..2w]
-		xPosition = fabs(xPosition); // Reflect off left wall
-		if (xPosition > w)
-		{
-			xPosition = w - (xPosition - w); // Reflect off right wall
-		}
+		xPosition = reflectValueBetweenBounds(unboundedX, 0, w);
 	}
 	return success;
 }

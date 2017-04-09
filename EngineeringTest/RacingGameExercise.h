@@ -114,7 +114,7 @@ inline void updateRacersV2(float deltaTimeS, std::vector<Racer*>& racers)
 	std::set<int> entriesToRemove;
 	// Already empty on construction, no need to call clear()
 
-	// Perform collision detection between racers
+	// Perform collision detection between racers. Converted to use integer keys in place of iterators for easier storage in an std::set
 	size_t racersCount = racers.size();
 	for (size_t i = 0; i < racersCount; i++)
 	{
@@ -129,13 +129,13 @@ inline void updateRacersV2(float deltaTimeS, std::vector<Racer*>& racers)
 				if (rhs->isCollidable() && lhs->collidesWith(rhs))
 				{
 					onRacerExplodes(lhs);
-					lhsHasCollided = true; // Set flag rather than adding to entriesToRemove here to ensure it is added once
+					lhsHasCollided = true; // Set flag rather than adding to entriesToRemove here to ensure it is only added once
 
 					// Optimised loop to only check collisions one way. We must now call onRacerExplodes for rhs here as well
 					onRacerExplodes(rhs);
 					entriesToRemove.insert(j);
 
-					// TODO: Investigate behavior of onRacerExplodes; if lhs is no longer collidable, can skip to next racer.
+					// TODO: Investigate behavior of onRacerExplodes; if lhs is no longer collidable, can stop testing for collisions.
 				}
 			}
 			if (lhsHasCollided)
@@ -151,4 +151,6 @@ inline void updateRacersV2(float deltaTimeS, std::vector<Racer*>& racers)
 		delete racers[*it];
 		racers.erase(racers.begin() + *it);
 	}
+
+	// newRacerList ultimately had no effect on the list of racers, as entries were removed in-place and no reordering occurred.
 }
