@@ -33,6 +33,11 @@ inline bool tryCalculateXPositionAtHeight(float h, Vec2 p, Vec2 v, float G, floa
 		// Path will intersect with h, derive elapsed time
 		float endV = sqrtf(endVSq);
 		float t = (h - p.y) / (v.y + (endV - v.y) * 0.5f);
+		if (t < 0)
+		{
+			// Path follows an arc in the opposite direction (sign was lost in endVSq above)
+			t = (h - p.y) / (v.y + (-endV - v.y) * 0.5f);
+		}
 
 		// Find resulting x coordinate at time t; horizontal velocity is not affected by gravity
 		float unboundedX = v.x * t + p.x;
