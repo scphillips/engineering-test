@@ -175,7 +175,12 @@ void WindowsConsoleRenderer::printGraphWithPathAndTargetHeight(float height, Vec
 			// Path intersects with the floor, attempt to render
 			float endV = sqrtf(endVSq);
 			float averageVerticalVelocity = (u + (endV - u) * 0.5f);
-			float t = (height - startPoint.y) / averageVerticalVelocity;
+			float t = (targetHeight - startPoint.y) / averageVerticalVelocity;
+			if (t < 0)
+			{
+				// Path follows an arc in the opposite direction (sign was lost in endVSq above)
+				t = (targetHeight - startPoint.y) / (u + (-endV - u) * 0.5f);
+			}
 			populateCoordinatesForPath(startPoint.x, startPoint.y, startVelocity.x, startVelocity.y, endV, verticalAcceleration, t, boundingWidth, pointsToPlot, plottedCoordinates);
 		}
 		else
@@ -212,8 +217,16 @@ void WindowsConsoleRenderer::printGraphWithPathAndTargetHeight(float height, Vec
 		SetConsoleTextAttribute(hConsole, 0x0F);
 		printf("%s", std::string(graphWidth, '-').c_str());
 
-		// Render plotted points
 		SetConsoleTextAttribute(hConsole, 0x07);
+		if (minExtent <= 1 && maxExtent >= -1)
+		{
+			// Render zero line
+			currentCursorPosition = convertGraphPointToConsoleCoordinate(0, 0, xMagnitude, yMagnitude, minExtent, maxExtent, cursorPosition);
+			SetConsoleCursorPosition(hConsole, { currentCursorPosition.X + 1, currentCursorPosition.Y });
+			printf("%s", std::string(graphWidth, '_').c_str());
+		}
+
+		// Render plotted points
 		for (const auto& entry : plottedCoordinates)
 		{
 			currentCursorPosition = convertGraphPointToConsoleCoordinate(entry.x, entry.y, xMagnitude, yMagnitude, minExtent, maxExtent, cursorPosition);
