@@ -83,7 +83,7 @@ COORD convertGraphPointToConsoleCoordinate(float posX, float posY, float scaleX,
 
 } // namespace
 
-void WindowsConsoleRenderer::printBoardWithHighlightedMovesAndMatches(const Board& board, std::vector<Move> moves, MatchedCellsCollection highlightCells) const
+void WindowsConsoleRenderer::printBoardWithHighlightedMovesAndMatches(const Board& board, const std::vector<Move>& moves, const MatchedCellsCollection& highlightCells) const
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
